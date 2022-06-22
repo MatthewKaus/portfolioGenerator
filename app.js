@@ -17,7 +17,7 @@ const promptUser = () => {
                 if (nameInput) {
                     return true;
                 } else {
-                    console.log('Please enter your name!');
+                    console.log('Please type enter your name!');
                     return false
                 }
             }
@@ -44,8 +44,8 @@ const promptUser = () => {
             type: 'input',
             name: 'about',
             message: 'Provide some information about yourself:',
-            when: ({confirmAbout}) => {
-                if (confirmAbout){
+            when: ({ confirmAbout }) => {
+                if (confirmAbout) {
                     return true;
                 } else {
                     return false;
@@ -133,17 +133,20 @@ const promptProject = portfolioData => {
 
 promptUser()
     .then(promptProject)
-    .then(projectAnswers => console.log(projectAnswers))
+    .then(portfolioData => {
+        const pageHTML = generatePage(portfolioData)
+
+
+        console.log(pageHTML)
+        fs.writeFile('./index.html', pageHTML, err => {
+            if (err) throw new Error(err);
+
+            console.log('Page created! Check out index.html in this directory to see it!')
+        })
+
+    })
 
 
 
 
 
-
-
-
-// fs.writeFile('index.html', generatePage(name, github), err => {
-//     if (err) throw err;
-
-//     console.log(`Portfolio complete! Check out index.html to see the output!`)
-// })
